@@ -1,0 +1,13 @@
+__pycache__
+chatbot
+crawler.py
+data.json
+extracted_data.json
+json_handling.py
+random.csv
+test.py
+test2.py
+apitest.py
+templates.py
+engine/prompts.py
+storage
