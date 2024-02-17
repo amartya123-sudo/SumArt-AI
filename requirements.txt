@@ -1,0 +1,6 @@
+llama-index==0.9.46
+bs4
+faiss-cpu
+openai
+fastapi
+uvicorn

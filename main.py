@@ -68,7 +68,7 @@ class Agent:
 
         return documents
         
-    def summarization(self):
+    def summarization(self, length:str):
         llm = OpenAI(model='gpt-3.5-turbo-instruct', temperature=0.7)
         service_context = ServiceContext.from_defaults(llm=llm)
         document = self.extract_content()
@@ -77,5 +77,21 @@ class Agent:
             service_context=service_context
         )
         Agent.query_engine = summary_index.as_query_engine(response_mode="tree_summarize")
-        summary = Agent.query_engine.query("Extract a concise 150 words summary of this document")
-        return summary.__dict__['response'].strip("\n")
+        query = f"""\
+            You are a content summarization assitant. You help come up with summarize any content provided. \
+            You only provide summary on the basis of content given. Word limit of the summary generated should be \
+            strict to {length} words. You also have to extract 3 MOST important keywords from the generated summary. \
+            You are provided the content.
+            Format in which you have to provide the response is:
+            <summary>
+            Summary
+            </summary>
+
+            <keywords>
+            Keywords
+            </keywords>
+
+            Follow the instructions strictly.
+        """
+        summary_engine = Agent.query_engine.query(query)
+        return summary_engine.__dict__['response'].strip("\n")
