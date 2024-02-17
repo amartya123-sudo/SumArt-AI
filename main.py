@@ -6,7 +6,6 @@ import requests
 from bs4 import BeautifulSoup
 from typing import List, Union
 import regex as re
-import templates as tm
 
 from llama_index import (
     SummaryIndex,
